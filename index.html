@@ -14,7 +14,7 @@
     font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;}
   h1{font-size:18px;margin:10px 12px 2px;letter-spacing:1px;}
   .sub{font-size:11.5px;color:var(--sub);margin:0 12px 12px;line-height:1.5;}
-  .wrap{max-width:960px;margin:0 auto;padding-bottom:32px;}
+  .wrap{max-width:960px;margin:0 auto;padding-bottom:32px;overflow-x:hidden;}
   .tabs{display:flex;gap:6px;padding:0 12px;margin-bottom:12px;flex-wrap:wrap;}
   .tab-btn{
     font-size:13px;padding:9px 12px;border-radius:8px;border:1px solid var(--line);
@@ -31,20 +31,33 @@
     background:#1f1f28;color:var(--sub);cursor:pointer;
   }
   .filter-chip.active{background:var(--accent2);border-color:var(--accent2);color:#111;font-weight:700;}
-  .card-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+  .card-grid{display:grid;grid-template-columns:1fr;gap:10px;min-width:0;}
   @media(min-width:640px){ .card-grid{grid-template-columns:1fr 1fr;} }
   .card{
     background:#1f1f28;border:1px solid var(--line);border-radius:10px;padding:12px;cursor:pointer;
-    transition:border-color .15s;
+    transition:border-color .15s;min-width:0;
   }
   .card:hover, .card.selected{border-color:var(--accent);}
-  .card h3{margin:0 0 4px;font-size:14.5px;}
+  .card h3{margin:0 0 4px;font-size:14.5px;overflow-wrap:anywhere;}
   .card .cat{display:inline-block;font-size:10.5px;color:var(--accent2);background:#2a2a1a;
     border-radius:4px;padding:2px 6px;margin-bottom:6px;}
   .card .desc{font-size:12px;color:#c9c9d4;line-height:1.5;margin:0 0 8px;}
+  .card .desc{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
   .card .mini-score{font-size:12px;color:var(--sub);}
   .card .mini-score b{color:var(--accent2);font-size:16px;}
   .analysis-empty{font-size:13px;color:var(--sub);text-align:center;padding:24px 0;}
+  .hero-title{font-size:20px;font-weight:800;color:#fff;margin:0 0 10px;line-height:1.35;}
+  .hero-title .tag{display:block;font-size:11px;color:var(--sub);font-weight:400;margin-bottom:4px;}
+  .action-row{display:flex;gap:8px;flex-wrap:wrap;margin:0 12px 14px;}
+  .action-btn{
+    flex:1;min-width:140px;font-size:14px;font-weight:700;padding:13px 10px;border-radius:10px;
+    border:1px solid var(--line);background:#1f1f28;color:var(--text);cursor:pointer;min-height:48px;
+  }
+  .action-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .share-btn{
+    display:block;width:100%;font-size:14px;font-weight:700;padding:13px 10px;border-radius:10px;
+    border:1px solid var(--line);background:#000;color:#fff;cursor:pointer;min-height:48px;margin-top:10px;
+  }
   .score-hero{display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap;}
   .score-hero .num{font-size:40px;font-weight:800;color:var(--accent2);}
   .score-hero .num span{font-size:16px;color:var(--sub);font-weight:400;}
@@ -89,6 +102,9 @@
   .calc-note{font-size:11.5px;color:#7c7c88;line-height:1.7;}
   .calc-note code{color:#c9c9d4;background:#1f1f28;padding:1px 4px;border-radius:4px;}
   .footer{font-size:11px;color:#55555f;text-align:center;padding:16px 14px 4px;line-height:1.7;}
+  details.calc-details summary{cursor:pointer;font-size:13px;color:var(--sub);padding:2px 0;}
+  details.calc-details[open] summary{margin-bottom:8px;}
+  details.sources-details summary{cursor:pointer;font-size:11px;color:var(--sub);margin-bottom:2px;}
 </style>
 </head>
 <body>
@@ -99,18 +115,27 @@
   <div class="tabs">
     <button class="tab-btn active" data-tab="candidates">コラボ候補</button>
     <button class="tab-btn" data-tab="ranking">ランキング</button>
-    <button class="tab-btn" data-tab="keiei">メーカー経営モード</button>
+    <button class="tab-btn" data-tab="keiei">経営モード</button>
   </div>
 
   <!-- 候補一覧タブ -->
   <div class="tab-panel active" id="tab-candidates">
-    <div class="filters" id="filters"></div>
-    <div class="card-grid" id="cardGrid"></div>
-
-    <div class="panel" id="analysisPanel" style="margin-top:14px;">
+    <div class="panel" id="analysisPanel">
       <h2>AI分析</h2>
-      <div id="analysisBody"><div class="analysis-empty">上の候補カードを選ぶと分析結果が表示されます。</div></div>
+      <div id="analysisBody"><div class="analysis-empty">読み込み中です…</div></div>
     </div>
+
+    <div class="action-row">
+      <button class="action-btn primary" id="btnRandom">🎲 別のIPで診断</button>
+      <button class="action-btn" id="btnPick">あなたの推しは？</button>
+    </div>
+
+    <details class="calc-details" style="margin:0 12px 14px;">
+      <summary>絞り込み</summary>
+      <div class="filters" id="filters" style="margin-top:8px;"></div>
+    </details>
+
+    <div class="card-grid" id="cardGrid"></div>
   </div>
 
   <!-- ランキングタブ -->
@@ -129,7 +154,7 @@
   <div class="tab-panel" id="tab-keiei">
     <div class="panel">
       <h2>年間ラインナップ編成(4機種枠)</h2>
-      <p class="calc-note" style="margin-bottom:10px;">下の候補をクリックして4枠に編成してください。もう一度クリックで解除できます。</p>
+      <p class="calc-note" style="margin-bottom:10px;">年間4機種を選んでメーカーの1年を組んでみよう。下の候補をクリックして4枠に編成してください。もう一度クリックで解除できます。</p>
       <div class="keiei-slots" id="keieiSlots"></div>
       <div id="keieiPickList"></div>
     </div>
@@ -145,10 +170,10 @@
     </div>
   </div>
 
-  <div class="panel" style="margin:0 12px 14px;">
-    <h2>計算の考え方</h2>
+  <details class="calc-details" style="margin:0 12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;">
+    <summary>計算の考え方</summary>
     <p class="calc-note">
-      <b style="color:#c9c9d4;">総合スコア</b>＝ 認知度(awareness)×0.3 ＋ 世界観との相性(core_fit)×0.3 ＋ 若年層親和性(youth_fit)×0.15 ＋ IPの鮮度(freshness)×0.15 ＋ ライセンス費補正(低:+10 / 中:0 / 高:-10)。0〜100にクランプします。<br><br>
+      <b style="color:#c9c9d4;">総合スコア</b>＝ 認知度×0.3 ＋ 今のお客さんウケ×0.3 ＋ 若い人ウケ×0.15 ＋ 今の話題性×0.15 ＋ 版権のとりやすさ補正(取りやすい:+10 / ふつう:0 / 取りにくい:-10)。0〜100にクランプします。<br><br>
       <b style="color:#c9c9d4;">シナリオ試算(強気/標準/弱気)</b>は総合スコアから決定論的に算出します。乱数は使用しません。<br>
       導入台数(推定) = <code>3,000台 × (総合スコア/100) × シナリオ係数</code>（強気1.3 / 標準1.0 / 弱気0.7）<br>
       導入店舗率 = <code>min(100%, 総合スコア × シナリオ係数 × 0.9%)</code><br>
@@ -156,7 +181,7 @@
       メーカー売上 = <code>導入台数 × 台単価(仮定40万円)</code>。台単価はあくまで仮定値です。<br><br>
       <b style="color:#c9c9d4;">機種名</b>はIP名と定型パターンを組み合わせて自動生成した架空の名称で、実在機種とは無関係です。
     </p>
-  </div>
+  </details>
 
   <div class="footer">
     架空メーカーのシミュレーションです。数値は公開統計と仮定に基づく推定で、実在メーカー・機種・出玉性能とは無関係です。<br>
@@ -177,11 +202,12 @@
   const LICENSE_COST_YEN = { "低": 30000000, "中": 80000000, "高": 200000000 }; // 経営モード試算用の仮定ライセンス費
   const KEIEI_SLOT_COUNT = 4;
   const MACHINE_NAME_PATTERNS = [
-    n => "P" + n + "〜AI覚醒〜",
-    n => "スーパー" + n + " IN AIホール",
-    n => "L" + n,
-    n => "CR" + n + " 2",
-    n => n + "祭 パチンコAIコラボ"
+    n => "P涼丸 " + n + "〜AI覚醒〜",
+    n => "P涼丸 " + n + " 甘デジAI",
+    n => "e涼丸 " + n + " -覚醒の刻-",
+    n => "P" + n + " 涼丸ver.",
+    n => "スーパー涼丸 " + n + " IN AIホール",
+    n => "CR涼丸 " + n + " 2"
   ];
 
   let candidates = [];
@@ -234,6 +260,7 @@
       renderCardGrid();
       renderRanking();
       renderKeieiPickList();
+      pickRandom();
     })
     .catch(err => {
       document.getElementById('cardGrid').innerHTML =
@@ -302,11 +329,13 @@
     const scenNormal = calcScenario(score, 'normal');
     const scenWeak = calcScenario(score, 'weak');
     const names = generateMachineNames(c);
+    const heroName = names[0];
 
     const html = ''
+      + '<div class="hero-title"><span class="tag">'+esc(c.name)+'（'+esc(c.category)+'）がパチンコになったら…</span>『'+esc(heroName)+'』</div>'
       + '<div class="score-hero">'
       +   '<div class="num">'+score+'<span> / 100</span></div>'
-      +   '<div style="font-size:13px;color:var(--sub);">'+esc(c.name)+'（'+esc(c.category)+'）の総合スコアです。</div>'
+      +   '<div style="font-size:13px;color:var(--sub);">総合スコアです。</div>'
       + '</div>'
       + '<div class="chart-wrap" id="radarWrap"></div>'
       + '<div class="scenarios">'
@@ -319,13 +348,32 @@
       + '</div>'
       + '<div class="info-row"><b>推す理由</b>'+esc(c.why)+'</div>'
       + '<div class="info-row"><b>リスク</b>'+esc(c.risk)+'</div>'
-      + '<div class="info-row"><b>出典</b>'
+      + '<button class="share-btn" id="btnShare">結果をXでシェア</button>'
+      + '<details class="sources-details" style="margin-top:10px;">'
+      +   '<summary>出典</summary>'
       +   '<div class="sources">'+(c.sources||[]).map(u=>'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(u)+'</a>').join('')+'</div>'
-      + '</div>';
+      + '</details>';
 
     document.getElementById('analysisBody').innerHTML = html;
     drawRadar(c);
+
+    const shareBtn = document.getElementById('btnShare');
+    if(shareBtn){
+      shareBtn.addEventListener('click', () => {
+        const text = '【涼丸産業 AIパチンコメーカー】\n'
+          + esc_(c.name) + 'がパチンコになったら…総合' + score + '点\n'
+          + '機種名『' + esc_(heroName) + '』\n'
+          + '#涼丸産業 #AIパチンコメーカー\n'
+          + 'https://ryoseiimai.github.io/ai-pachinko-maker/';
+        const url = 'https://x.com/intent/post?text=' + encodeURIComponent(text);
+        console.log('share intent url:', url);
+        window.open(url, '_blank', 'noopener');
+      });
+    }
   }
+
+  // シェア文言用: HTMLエスケープ不要な生テキストを返す（escはHTMLエスケープ関数のため別名で用意）
+  function esc_(s){ return String(s); }
 
   function scenarioCardHtml(title, s){
     return '<div class="scenario-card">'
@@ -344,7 +392,7 @@
     const wrap = document.getElementById('radarWrap');
     if(!wrap) return;
 
-    const labels = ['認知度','世界観相性','若年層親和性','鮮度','ライセンス費補正'];
+    const labels = ['認知度','客ウケ','若者ウケ','話題性','版権'];
     const values = [
       c.awareness,
       c.core_fit,
@@ -387,12 +435,20 @@
     const dataPolyPoints = dataPts.map(p => p.join(',')).join(' ');
     const dataDots = dataPts.map(([x, y]) => '<circle cx="'+x+'" cy="'+y+'" r="3" fill="#ffd60a"/>').join('');
 
-    // 軸ラベル（半径の外側に配置、はみ出し防止で軽くクランプ）
+    // 軸ラベル（半径の外側に配置、はみ出し防止で軽くクランプ・長いラベルは2行に折り返し）
+    function wrapLabelLines(label){
+      if(label.length <= 4) return [label];
+      const mid = Math.ceil(label.length / 2);
+      return [label.slice(0, mid), label.slice(mid)];
+    }
     const labelPts = labels.map((label, i) => {
-      const [x, y] = pointAt(i, maxR + 22);
+      const [x, y] = pointAt(i, maxR + 24);
       const anchor = Math.abs(Math.cos(angleFor(i))) < 0.15 ? 'middle' : (Math.cos(angleFor(i)) > 0 ? 'start' : 'end');
-      const clampedX = Math.max(14, Math.min(size - 14, x));
-      return '<text x="'+clampedX+'" y="'+y+'" fill="#c9c9d4" font-size="10" text-anchor="'+anchor+'" dominant-baseline="middle">'+esc(label)+'</text>';
+      const clampedX = Math.max(24, Math.min(size - 24, x));
+      const lines = wrapLabelLines(label);
+      const startDy = -(lines.length - 1) * 5.5;
+      const tspans = lines.map((ln, li) => '<tspan x="'+clampedX+'" dy="'+(li===0?startDy:11)+'">'+esc(ln)+'</tspan>').join('');
+      return '<text x="'+clampedX+'" y="'+y+'" fill="#c9c9d4" font-size="10" text-anchor="'+anchor+'" dominant-baseline="middle">'+tspans+'</text>';
     }).join('');
 
     const svg = ''
@@ -502,6 +558,36 @@
     renderKeieiSlots();
     renderKeieiPickList();
     renderKeieiSummary();
+  }
+
+  // ---- 開いた瞬間に結果（毎回ランダム1件）----
+  function pickRandom(){
+    if(candidates.length === 0) return;
+    let next = selectedId;
+    if(candidates.length > 1){
+      while(next === selectedId){
+        next = candidates[Math.floor(Math.random()*candidates.length)].id;
+      }
+    } else {
+      next = candidates[0].id;
+    }
+    selectedId = next;
+    renderCardGrid();
+    renderAnalysis(byId(selectedId));
+  }
+
+  const btnRandom = document.getElementById('btnRandom');
+  if(btnRandom){
+    btnRandom.addEventListener('click', () => {
+      pickRandom();
+      document.getElementById('analysisPanel').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  }
+  const btnPick = document.getElementById('btnPick');
+  if(btnPick){
+    btnPick.addEventListener('click', () => {
+      document.getElementById('cardGrid').scrollIntoView({behavior:'smooth', block:'start'});
+    });
   }
 
   // ---- タブ切替 ----
