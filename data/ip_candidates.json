@@ -1,0 +1,404 @@
+[
+  {
+    "id": "eva",
+    "name": "エヴァンゲリオン",
+    "category": "アニメ",
+    "pachinko_history": "2004年〜シリーズ化・パチンコ/パチスロ史上最大級の定番ブランド",
+    "awareness": 95,
+    "core_fit": 95,
+    "youth_fit": 55,
+    "license_cost": "高",
+    "freshness": 60,
+    "risk": "版権元(カラー)がライセンス供与に慎重で新機開発の頻度が落ちてきている。使い古され感のリスクあり。",
+    "why": "パチンコ最強ブランドの一つで主要客層の集客力は圧倒的。新規AI機での再解釈で古参ファンの再訪を狙える。",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Sega_Sammy_Holdings"
+    ]
+  },
+  {
+    "id": "hokuto",
+    "name": "北斗の拳",
+    "category": "漫画/アニメ",
+    "pachinko_history": "2003年〜サミーが看板シリーズとして継続展開・パチスロ屈指のヒット作",
+    "awareness": 90,
+    "core_fit": 95,
+    "youth_fit": 40,
+    "license_cost": "高",
+    "freshness": 55,
+    "risk": "版権が特定メーカー(サミー系列)に強く紐づいており他社は参入しづらい。",
+    "why": "30〜60代男性コア層への訴求力が最強クラス。ただし新規参入は版権の空き状況次第。",
+    "sources": [
+      "https://amusement-japan.co.jp/article/detail/10004015/"
+    ]
+  },
+  {
+    "id": "umimonogatari",
+    "name": "海物語（他社の自社IP・参考枠）",
+    "category": "他社オリジナル(参考)",
+    "pachinko_history": "1999年〜三洋物産の看板オリジナルブランド・国内歴代最多稼働台数級",
+    "awareness": 85,
+    "core_fit": 90,
+    "youth_fit": 30,
+    "license_cost": "高",
+    "freshness": 50,
+    "risk": "特定メーカーの自社IPのため他社が模倣すると商標・イメージ面で衝突しやすい。",
+    "why": "三洋の自社オリジナルが定番化した成功例。他社IPのため当社がコラボできる対象ではなく、「外部IPに頼らず自社キャラを育てる」戦略の参考枠として掲載。",
+    "sources": [
+      "https://www.fujimarukun.co.jp/corp/ir/individuals/market.html"
+    ]
+  },
+  {
+    "id": "garo",
+    "name": "牙狼〈GARO〉",
+    "category": "特撮/オリジナル映像",
+    "pachinko_history": "2009年〜Sammy系列で継続シリーズ化・独自の世界観ファンを獲得",
+    "awareness": 70,
+    "core_fit": 85,
+    "youth_fit": 35,
+    "license_cost": "中",
+    "freshness": 45,
+    "risk": "一般認知度はエヴァ・北斗より低く新規層への訴求は弱い。",
+    "why": "コアなパチンコファンからの信頼が厚く安定稼働が見込める定番枠。",
+    "sources": [
+      "https://amusement-japan.co.jp/article/detail/10004015/"
+    ]
+  },
+  {
+    "id": "keiji",
+    "name": "花の慶次〜雲のかなたに〜",
+    "category": "漫画",
+    "pachinko_history": "2005年〜パチスロ史上屈指の人気シリーズを継続展開",
+    "awareness": 80,
+    "core_fit": 90,
+    "youth_fit": 30,
+    "license_cost": "高",
+    "freshness": 45,
+    "risk": "版権元(集英社/原作者関係)との条件交渉が厳しく、既存メーカーとの関係が強固。",
+    "why": "コア層への安定感は随一。新興AIメーカーが割って入るハードルは高いが取れれば強力。",
+    "sources": [
+      "https://gyokai-search.com/3-pachinko.html"
+    ]
+  },
+  {
+    "id": "gundam",
+    "name": "機動戦士ガンダム",
+    "category": "アニメ",
+    "pachinko_history": "2006年〜バンダイナムコ関連メーカーがシリーズ展開・複数作品化",
+    "awareness": 90,
+    "core_fit": 85,
+    "youth_fit": 50,
+    "license_cost": "高",
+    "freshness": 65,
+    "risk": "バンダイナムコのライセンス管理が厳格でコラボ条件・審査が重い。",
+    "why": "40〜50代男性の原体験に強く刺さり、かつガンダムは新作アニメで若年層も継続獲得できる稀有な二刀流IP。",
+    "sources": [
+      "https://gyokai-search.com/3-pachinko.html"
+    ]
+  },
+  {
+    "id": "lupin",
+    "name": "ルパン三世",
+    "category": "アニメ",
+    "pachinko_history": "2005年〜継続シリーズ化・パチンコ/パチスロ双方で長期展開",
+    "awareness": 90,
+    "core_fit": 85,
+    "youth_fit": 35,
+    "license_cost": "中",
+    "freshness": 40,
+    "risk": "テレビ露出が減っており新規層の認知が年々低下気味。",
+    "why": "40代以上への安心感あるノスタルジー訴求で失敗しにくい定番枠。",
+    "sources": [
+      "https://gyokai-search.com/3-pachinko.html"
+    ]
+  },
+  {
+    "id": "symphogear",
+    "name": "戦姫絶唱シンフォギア",
+    "category": "アニメ",
+    "pachinko_history": "2015年〜継続シリーズ化・熱狂的コアファン層を持つ",
+    "awareness": 55,
+    "core_fit": 75,
+    "youth_fit": 45,
+    "license_cost": "中",
+    "freshness": 50,
+    "risk": "一般層への認知が限定的でライトユーザーへの訴求力は弱い。",
+    "why": "既存ファンの熱量が高くリピート稼働が読みやすい安定枠。",
+    "sources": [
+      "https://gyokai-search.com/3-pachinko.html"
+    ]
+  },
+  {
+    "id": "rezero",
+    "name": "Re:ゼロから始める異世界生活",
+    "category": "アニメ/ラノベ",
+    "pachinko_history": "2018年〜パチスロで大ヒットシリーズ化・複数弾展開",
+    "awareness": 75,
+    "core_fit": 70,
+    "youth_fit": 65,
+    "license_cost": "中",
+    "freshness": 60,
+    "risk": "既に複数メーカーが版権を握っており新規参入は競合が多い。",
+    "why": "20〜30代アニメファン層とパチンコ主要客層の橋渡しに成功した実績があり、若年獲得のモデルケース。",
+    "sources": [
+      "https://gyokai-search.com/3-pachinko.html"
+    ]
+  },
+  {
+    "id": "madoka",
+    "name": "魔法少女まどか☆マギカ",
+    "category": "アニメ",
+    "pachinko_history": "2013年〜複数弾で継続展開・演出クオリティで高評価",
+    "awareness": 70,
+    "core_fit": 70,
+    "youth_fit": 55,
+    "license_cost": "中",
+    "freshness": 45,
+    "risk": "新作展開が落ち着いており旬度はやや過ぎている。",
+    "why": "演出とストーリー性の親和性が高く、AI生成映像との相性も良い題材。",
+    "sources": [
+      "https://gyokai-search.com/3-pachinko.html"
+    ]
+  },
+  {
+    "id": "eureka",
+    "name": "交響詩篇エウレカセブン",
+    "category": "アニメ",
+    "pachinko_history": "2013年〜継続シリーズ化",
+    "awareness": 65,
+    "core_fit": 70,
+    "youth_fit": 40,
+    "license_cost": "中",
+    "freshness": 35,
+    "risk": "近年新作の話題性が薄く、旬度の低下が続いている。",
+    "why": "根強いファン層による安定稼働が見込める中堅定番枠。",
+    "sources": [
+      "https://gyokai-search.com/3-pachinko.html"
+    ]
+  },
+  {
+    "id": "oshinoko",
+    "name": "【推しの子】",
+    "category": "漫画/アニメ",
+    "pachinko_history": "パチンコ化実績なし",
+    "awareness": 85,
+    "core_fit": 40,
+    "youth_fit": 90,
+    "license_cost": "高",
+    "freshness": 90,
+    "risk": "芸能界・アイドル業界の裏側を扱う作品性がギャンブル業界とのコラボにネガティブな印象を与える可能性。原作者・出版社が新規業界タイアップに慎重な傾向。",
+    "why": "20〜30代への訴求力は最大級。未パチンコ化ゆえ先行者利益が狙えるが版権獲得競争は激しい想定。",
+    "sources": [
+      "https://passlotime.com/2026/07/31/post-53605/"
+    ]
+  },
+  {
+    "id": "kimetsu",
+    "name": "鬼滅の刃",
+    "category": "漫画/アニメ",
+    "pachinko_history": "パチンコ化実績なし(集英社が版権管理を厳格化しパチンコ業界への提供に消極的と噂される)",
+    "awareness": 98,
+    "core_fit": 45,
+    "youth_fit": 85,
+    "license_cost": "高",
+    "freshness": 70,
+    "risk": "版元・原作者が国民的作品としてのブランドイメージ維持を重視し、パチンコ提供自体を拒否している可能性が高い。実現性は低い。",
+    "why": "認知度は日本最高クラスだが実現可能性が極めて低く、コラボ候補としては話題喚起用の『狙ってはいけない例』として掲載。",
+    "sources": [
+      "https://passlotime.com/2026/07/31/post-53605/"
+    ]
+  },
+  {
+    "id": "jujutsu",
+    "name": "呪術廻戦",
+    "category": "漫画/アニメ",
+    "pachinko_history": "パチンコ化実績なし。パチスロメーカー山佐が版権取得との噂があり2027年以降導入が噂される段階",
+    "awareness": 88,
+    "core_fit": 55,
+    "youth_fit": 88,
+    "license_cost": "高",
+    "freshness": 88,
+    "risk": "版権取得済みと噂される先行メーカーがあり、後発参入は困難な可能性。呪術という題材のオカルト色をどう扱うかも論点。",
+    "why": "未パチンコ化の人気IPの中でも最有力候補。実現すれば若年層取り込みの起爆剤になり得るが版権争奪戦のリスクが高い。",
+    "sources": [
+      "https://passlotime.com/2026/07/31/post-53605/",
+      "https://moe-slotpachi.com/pachinko-slot/jujutsukaisen-rumor/"
+    ]
+  },
+  {
+    "id": "spyfamily",
+    "name": "SPY×FAMILY",
+    "category": "漫画/アニメ",
+    "pachinko_history": "パチンコ化実績なし",
+    "awareness": 88,
+    "core_fit": 40,
+    "youth_fit": 92,
+    "license_cost": "高",
+    "freshness": 85,
+    "risk": "ファミリー向け・コメディ色が強くギャンブル業界のイメージと作品トーンのミスマッチが懸念される。原作者・出版社が慎重な可能性。",
+    "why": "20〜30代・ファミリー層への訴求は圧倒的だが、パチンコの主要客層(男性コア層)との相性は未知数。話題性優先の攻め枠。",
+    "sources": [
+      "https://passlotime.com/2026/07/31/post-53605/"
+    ]
+  },
+  {
+    "id": "chainsawman",
+    "name": "チェンソーマン",
+    "category": "漫画/アニメ",
+    "pachinko_history": "パチンコ化実績なし",
+    "awareness": 75,
+    "core_fit": 55,
+    "youth_fit": 85,
+    "license_cost": "中",
+    "freshness": 80,
+    "risk": "グロテスク表現が強く演出面での規制対応・審査が必要になる可能性。",
+    "why": "ダークな世界観がパチンコの演出文化と親和性が高く、成人男性ファンも多いため主要客層との重なりも期待できる。",
+    "sources": [
+      "https://passlotime.com/2026/07/31/post-53605/"
+    ]
+  },
+  {
+    "id": "jojo",
+    "name": "ジョジョの奇妙な冒険",
+    "category": "漫画/アニメ",
+    "pachinko_history": "パチンコ化実績なし(過去にスロット系タイアップの噂はあるが正式導入未確認)",
+    "awareness": 78,
+    "core_fit": 65,
+    "youth_fit": 60,
+    "license_cost": "中",
+    "freshness": 55,
+    "risk": "長期シリーズで版権管理元(集英社)が複数あり交渉が複雑になりやすい。",
+    "why": "30〜40代男性ファンの熱量が高く、独特の演出文化がパチンコ台の派手な演出と相性良好。",
+    "sources": [
+      "https://gyokai-search.com/3-pachinko.html"
+    ]
+  },
+  {
+    "id": "attack_on_titan",
+    "name": "進撃の巨人",
+    "category": "漫画/アニメ",
+    "pachinko_history": "パチンコ化実績なし(呪術廻戦と並び新規タイアップの噂が浮上)",
+    "awareness": 90,
+    "core_fit": 50,
+    "youth_fit": 70,
+    "license_cost": "中",
+    "freshness": 60,
+    "risk": "アニメ本編は完結済みで旬度はピークを過ぎている。",
+    "why": "完結済みだが根強い人気があり、遊技機化の噂が既に出ている実現性の高い候補。",
+    "sources": [
+      "https://parlourfullslotl.com/archives/182699",
+      "https://passlotime.com/2026/07/31/post-53605/"
+    ]
+  },
+  {
+    "id": "tensura",
+    "name": "転生したらスライムだった件",
+    "category": "ラノベ/アニメ",
+    "pachinko_history": "パチスロで山佐から市場導入済み・パチンコは未導入",
+    "awareness": 65,
+    "core_fit": 55,
+    "youth_fit": 70,
+    "license_cost": "中",
+    "freshness": 60,
+    "risk": "既に山佐がパチスロ版権を握っており、パチンコ機開発でも競合になりやすい。",
+    "why": "異世界転生ジャンルの成功例で若年〜中堅層に安定した支持がある。パチンコ版は空白地帯で先行者利益が狙える。",
+    "sources": [
+      "https://moe-slotpachi.com/pachinko-slot/jujutsukaisen-rumor/"
+    ]
+  },
+  {
+    "id": "owarai_famous",
+    "name": "人気お笑い芸人(冠番組級のトップ芸人)",
+    "category": "芸人",
+    "pachinko_history": "過去に複数の芸人冠パチスロ機の実績あり(バラエティ企画型)",
+    "awareness": 80,
+    "core_fit": 80,
+    "youth_fit": 50,
+    "license_cost": "中",
+    "freshness": 55,
+    "risk": "個人の不祥事・スキャンダルリスクが常につきまとい、機種寿命中の炎上で稼働停止リスクがある。",
+    "why": "パチンコ主要客層のテレビ視聴習慣と親和性が高く笑いの演出は再訪動機になりやすい。個人リスクの契約条項が必須。",
+    "sources": [
+      "https://gyokai-search.com/3-pachinko.html"
+    ]
+  },
+  {
+    "id": "enka_artist",
+    "name": "演歌・歌謡曲系トップアーティスト",
+    "category": "アーティスト",
+    "pachinko_history": "過去に複数の楽曲タイアップ機実績あり(北島三郎など著名例)",
+    "awareness": 75,
+    "core_fit": 90,
+    "youth_fit": 15,
+    "license_cost": "中",
+    "freshness": 30,
+    "risk": "若年層への訴求は皆無に近く、新規顧客拡大には寄与しにくい。",
+    "why": "パチンコホールの主力である中高年男性への訴求力は非常に高く鉄板の安定集客が見込める。",
+    "sources": [
+      "https://amusement-japan.co.jp/article/detail/10005046/"
+    ]
+  },
+  {
+    "id": "vtuber_group",
+    "name": "大手VTuberグループ(ホロライブ/にじさんじ級)",
+    "category": "VTuber",
+    "pachinko_history": "パチンコ化実績なし",
+    "awareness": 55,
+    "core_fit": 20,
+    "youth_fit": 90,
+    "license_cost": "高",
+    "freshness": 95,
+    "risk": "ファン層のパチンコ・ギャンブルへの忌避感が強く、コラボ発表自体がファンコミュニティで炎上する可能性が高い。事務所側もイメージ毀損を懸念し許諾しない可能性大。",
+    "why": "旬度・話題性は最大級だが実現可能性とパチンコ主要客層との相性が最も低い『意外枠』。PR効果狙いの限定コラボ以外は非推奨。",
+    "sources": [
+      "https://amusement-japan.co.jp/article/detail/10005046/"
+    ]
+  },
+  {
+    "id": "youtuber_ent",
+    "name": "登録者数上位のエンタメ系YouTuber",
+    "category": "YouTuber",
+    "pachinko_history": "パチンコ化実績なし(一部でスロット実機系コンテンツとのタイアップ企画はあり)",
+    "awareness": 60,
+    "core_fit": 30,
+    "youth_fit": 80,
+    "license_cost": "低",
+    "freshness": 80,
+    "risk": "コンテンツの一過性が強く、機種寿命(通常数ヶ月〜1年)に対してブームが短命化するリスク。",
+    "why": "ライセンス費用を抑えつつ若年層への話題喚起ができる低コスト実験枠として有効。",
+    "sources": [
+      "https://amusement-japan.co.jp/article/detail/10005046/"
+    ]
+  },
+  {
+    "id": "gochiiki",
+    "name": "ご当地キャラクター(地域観光連携)",
+    "category": "ご当地",
+    "pachinko_history": "パチンコ化実績はほぼなし(小規模タイアップ事例のみ)",
+    "awareness": 30,
+    "core_fit": 40,
+    "youth_fit": 30,
+    "license_cost": "低",
+    "freshness": 40,
+    "risk": "全国的な集客力が乏しく、単独機種としての収益化は難しい。",
+    "why": "地域密着ホールとの限定タイアップやCSR文脈での話題作りには有効だが主力機としては不向き。",
+    "sources": [
+      "https://amusement-japan.co.jp/article/detail/10005046/"
+    ]
+  },
+  {
+    "id": "ai_original_character",
+    "name": "自社AIオリジナルキャラクター(生成AIで育てるバーチャルIP)",
+    "category": "AIキャラ/自社オリジナル",
+    "pachinko_history": "パチンコ化実績なし(新規開発枠)",
+    "awareness": 5,
+    "core_fit": 50,
+    "youth_fit": 70,
+    "license_cost": "低",
+    "freshness": 100,
+    "risk": "認知度ゼロからのスタートで初速の集客が読めない。AI生成コンテンツへの業界内外の反応(著作権・生成物規制の議論)にも注意。",
+    "why": "『AIパチンコメーカー』というブランド自体を体現する最大の差別化枠。ライセンス費ゼロで長期育成でき、他メーカーが真似できない独自資産になる。海物語のようにシリーズ化前提で腰を据えて投資すべき本命候補。",
+    "sources": [
+      "https://www.fujimarukun.co.jp/corp/ir/individuals/market.html"
+    ]
+  }
+]

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>RYOSEI遊技 - AIパチンコメーカー</title>
+<style>
+  :root{
+    --bg:#0c0c10; --panel:#17171d; --line:#2a2a33; --text:#f2f2f2;
+    --accent:#ff2d55; --accent2:#ffd60a; --sub:#9a9aa5; --ok:#5ce17a;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;}
+  h1{font-size:18px;margin:10px 12px 2px;letter-spacing:1px;}
+  .sub{font-size:11.5px;color:var(--sub);margin:0 12px 12px;line-height:1.5;}
+  .wrap{max-width:960px;margin:0 auto;padding-bottom:32px;}
+  .tabs{display:flex;gap:6px;padding:0 12px;margin-bottom:12px;flex-wrap:wrap;}
+  .tab-btn{
+    font-size:13px;padding:9px 12px;border-radius:8px;border:1px solid var(--line);
+    background:#1f1f28;color:var(--text);cursor:pointer;flex:1;min-width:100px;
+  }
+  .tab-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;}
+  .tab-panel{display:none;padding:0 12px;}
+  .tab-panel.active{display:block;}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:14px;}
+  .panel h2{font-size:14px;margin:0 0 10px;color:var(--accent2);letter-spacing:.5px;}
+  .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+  .filter-chip{
+    font-size:12px;padding:6px 10px;border-radius:16px;border:1px solid var(--line);
+    background:#1f1f28;color:var(--sub);cursor:pointer;
+  }
+  .filter-chip.active{background:var(--accent2);border-color:var(--accent2);color:#111;font-weight:700;}
+  .card-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+  @media(min-width:640px){ .card-grid{grid-template-columns:1fr 1fr;} }
+  .card{
+    background:#1f1f28;border:1px solid var(--line);border-radius:10px;padding:12px;cursor:pointer;
+    transition:border-color .15s;
+  }
+  .card:hover, .card.selected{border-color:var(--accent);}
+  .card h3{margin:0 0 4px;font-size:14.5px;}
+  .card .cat{display:inline-block;font-size:10.5px;color:var(--accent2);background:#2a2a1a;
+    border-radius:4px;padding:2px 6px;margin-bottom:6px;}
+  .card .desc{font-size:12px;color:#c9c9d4;line-height:1.5;margin:0 0 8px;}
+  .card .mini-score{font-size:12px;color:var(--sub);}
+  .card .mini-score b{color:var(--accent2);font-size:16px;}
+  .analysis-empty{font-size:13px;color:var(--sub);text-align:center;padding:24px 0;}
+  .score-hero{display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap;}
+  .score-hero .num{font-size:40px;font-weight:800;color:var(--accent2);}
+  .score-hero .num span{font-size:16px;color:var(--sub);font-weight:400;}
+  .chart-wrap{max-width:320px;margin:0 auto 12px;}
+  .scenarios{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:12px;}
+  @media(min-width:560px){ .scenarios{grid-template-columns:1fr 1fr 1fr;} }
+  .scenario-card{background:#1f1f28;border:1px solid var(--line);border-radius:8px;padding:10px;}
+  .scenario-card h4{margin:0 0 6px;font-size:12.5px;color:var(--accent2);}
+  .scenario-card .row2{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;color:#c9c9d4;}
+  .scenario-card .row2 b{color:#fff;}
+  .machine-names{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+  .machine-name{font-size:12px;background:#1f1f28;border:1px solid var(--line);border-radius:6px;padding:6px 9px;color:var(--accent2);}
+  .info-row{font-size:12.5px;color:#c9c9d4;line-height:1.6;margin-bottom:8px;}
+  .info-row b{color:#fff;display:block;font-size:11px;color:var(--sub);margin-bottom:2px;}
+  .sources a{color:#7ea6ff;font-size:11.5px;display:block;text-decoration:none;word-break:break-all;}
+  .sources a:hover{text-decoration:underline;}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table th,table td{padding:7px 5px;border-bottom:1px solid var(--line);text-align:right;}
+  table th:first-child,table td:first-child{text-align:left;}
+  table th:nth-child(2),table td:nth-child(2){text-align:left;}
+  table th{color:var(--sub);font-weight:600;}
+  table tr.rank-1 td:first-child{color:var(--accent2);font-weight:700;}
+  .keiei-slots{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  .slot{
+    width:110px;height:70px;border:1px dashed var(--line);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-size:11px;color:var(--sub);padding:6px;cursor:pointer;
+  }
+  .slot.filled{border-style:solid;border-color:var(--accent2);color:#fff;background:#1f1f28;font-weight:700;}
+  .keiei-pick{
+    display:inline-block;font-size:11.5px;background:#1f1f28;border:1px solid var(--line);
+    border-radius:16px;padding:5px 10px;margin:0 6px 6px 0;cursor:pointer;color:#c9c9d4;
+  }
+  .keiei-pick.picked{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;}
+  .keiei-pick.disabled{opacity:.4;cursor:not-allowed;}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;}
+  .stat{background:#1f1f28;border:1px solid var(--line);border-radius:8px;padding:8px 10px;}
+  .stat .label{font-size:11px;color:var(--sub);}
+  .stat .value{font-size:17px;font-weight:700;color:var(--accent2);word-break:break-all;}
+  .warn{background:#2a1a1a;border:1px solid var(--accent);color:#ffb3b3;border-radius:8px;padding:8px 10px;font-size:12px;margin-top:8px;}
+  .ok-msg{background:#182a1e;border:1px solid var(--ok);color:#a8f0bd;border-radius:8px;padding:8px 10px;font-size:12px;margin-top:8px;}
+  .calc-note{font-size:11.5px;color:#7c7c88;line-height:1.7;}
+  .calc-note code{color:#c9c9d4;background:#1f1f28;padding:1px 4px;border-radius:4px;}
+  .footer{font-size:11px;color:#55555f;text-align:center;padding:16px 14px 4px;line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>RYOSEI遊技(AIパチンコメーカー)</h1>
+  <p class="sub">どのIPとコラボして台を出すか、AIが分析します。<br>架空メーカーによる企画シミュレーションツールです。</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="candidates">コラボ候補</button>
+    <button class="tab-btn" data-tab="ranking">ランキング</button>
+    <button class="tab-btn" data-tab="keiei">メーカー経営モード</button>
+  </div>
+
+  <!-- 候補一覧タブ -->
+  <div class="tab-panel active" id="tab-candidates">
+    <div class="filters" id="filters"></div>
+    <div class="card-grid" id="cardGrid"></div>
+
+    <div class="panel" id="analysisPanel" style="margin-top:14px;">
+      <h2>AI分析</h2>
+      <div id="analysisBody"><div class="analysis-empty">上の候補カードを選ぶと分析結果が表示されます。</div></div>
+    </div>
+  </div>
+
+  <!-- ランキングタブ -->
+  <div class="tab-panel" id="tab-ranking">
+    <div class="panel">
+      <h2>総合スコア ランキング</h2>
+      <div class="filters" id="rankFilters"></div>
+      <table id="rankTable">
+        <thead><tr><th>順位</th><th>IP名</th><th>カテゴリ</th><th>総合スコア</th></tr></thead>
+        <tbody id="rankBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 経営モードタブ -->
+  <div class="tab-panel" id="tab-keiei">
+    <div class="panel">
+      <h2>年間ラインナップ編成(4機種枠)</h2>
+      <p class="calc-note" style="margin-bottom:10px;">下の候補をクリックして4枠に編成してください。もう一度クリックで解除できます。</p>
+      <div class="keiei-slots" id="keieiSlots"></div>
+      <div id="keieiPickList"></div>
+    </div>
+    <div class="panel">
+      <h2>ポートフォリオ試算</h2>
+      <div class="stats">
+        <div class="stat"><div class="label">年間メーカー売上(標準シナリオ計)</div><div class="value" id="keieiSales">-</div></div>
+        <div class="stat"><div class="label">ライセンス費用感(合計)</div><div class="value" id="keieiLicense">-</div></div>
+        <div class="stat"><div class="label">編成枠</div><div class="value" id="keieiCount">0 / 4</div></div>
+        <div class="stat"><div class="label">平均総合スコア</div><div class="value" id="keieiAvgScore">-</div></div>
+      </div>
+      <div id="keieiWarn"></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin:0 12px 14px;">
+    <h2>計算の考え方</h2>
+    <p class="calc-note">
+      <b style="color:#c9c9d4;">総合スコア</b>＝ 認知度(awareness)×0.3 ＋ 世界観との相性(core_fit)×0.3 ＋ 若年層親和性(youth_fit)×0.15 ＋ IPの鮮度(freshness)×0.15 ＋ ライセンス費補正(低:+10 / 中:0 / 高:-10)。0〜100にクランプします。<br><br>
+      <b style="color:#c9c9d4;">シナリオ試算(強気/標準/弱気)</b>は総合スコアから決定論的に算出します。乱数は使用しません。<br>
+      導入台数(推定) = <code>3,000台 × (総合スコア/100) × シナリオ係数</code>（強気1.3 / 標準1.0 / 弱気0.7）<br>
+      導入店舗率 = <code>min(100%, 総合スコア × シナリオ係数 × 0.9%)</code><br>
+      稼働寿命(週) = <code>(8 + 総合スコア/100×20) × 寿命係数</code>（強気1.2 / 標準1.0 / 弱気0.8）<br>
+      メーカー売上 = <code>導入台数 × 台単価(仮定40万円)</code>。台単価はあくまで仮定値です。<br><br>
+      <b style="color:#c9c9d4;">機種名</b>はIP名と定型パターンを組み合わせて自動生成した架空の名称で、実在機種とは無関係です。
+    </p>
+  </div>
+
+  <div class="footer">
+    架空メーカーのシミュレーションです。数値は公開統計と仮定に基づく推定で、実在メーカー・機種・出玉性能とは無関係です。<br>
+    設定・出玉・還元率に関する数値は一切扱いません。
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---- 定数 ----
+  const UNIT_PRICE_YEN = 400000; // 台単価の仮定値(円)
+  const BASE_UNITS = 3000; // シナリオ計算のベース導入台数
+  const SCENARIO_UNIT_MULT = { strong: 1.3, normal: 1.0, weak: 0.7 };
+  const SCENARIO_LIFE_MULT = { strong: 1.2, normal: 1.0, weak: 0.8 };
+  const LICENSE_BONUS = { "低": 10, "中": 0, "高": -10 };
+  const LICENSE_COST_YEN = { "低": 30000000, "中": 80000000, "高": 200000000 }; // 経営モード試算用の仮定ライセンス費
+  const KEIEI_SLOT_COUNT = 4;
+  const MACHINE_NAME_PATTERNS = [
+    n => "P" + n + "〜AI覚醒〜",
+    n => "スーパー" + n + " IN AIホール",
+    n => "L" + n,
+    n => "CR" + n + " 2",
+    n => n + "祭 パチンコAIコラボ"
+  ];
+
+  let candidates = [];
+  let selectedId = null;
+  let rankFilter = "all";
+  let cardFilter = "all";
+  // radarChart: Chart.jsは使わずインラインSVGで描画（外部ライブラリ依存なし）
+  const keieiSlots = new Array(KEIEI_SLOT_COUNT).fill(null); // id or null
+
+  function byId(id){ return candidates.find(c => c.id === id); }
+
+  function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+
+  function calcScore(c){
+    const base = c.awareness*0.3 + c.core_fit*0.3 + c.youth_fit*0.15 + c.freshness*0.15;
+    const bonus = LICENSE_BONUS[c.license_cost] || 0;
+    return Math.round(clamp(base + bonus, 0, 100));
+  }
+
+  function calcScenario(score, key){
+    const unitMult = SCENARIO_UNIT_MULT[key];
+    const lifeMult = SCENARIO_LIFE_MULT[key];
+    const units = Math.round(BASE_UNITS * (score/100) * unitMult);
+    const storeRate = Math.round(clamp(score * unitMult * 0.9, 0, 100));
+    const lifeWeeks = Math.round((8 + (score/100)*20) * lifeMult);
+    const sales = units * UNIT_PRICE_YEN;
+    return { units, storeRate, lifeWeeks, sales };
+  }
+
+  function yen(n){ return Math.round(n).toLocaleString() + "円"; }
+
+  function generateMachineNames(c){
+    // idを簡易ハッシュしてパターンの並びをずらす(擬似ランダムではなく決定論的な選択)
+    let h = 0;
+    for(let i=0;i<c.id.length;i++){ h = (h*31 + c.id.charCodeAt(i)) >>> 0; }
+    const names = [];
+    for(let i=0;i<3;i++){
+      const idx = (h + i*7) % MACHINE_NAME_PATTERNS.length;
+      names.push(MACHINE_NAME_PATTERNS[idx](c.name));
+    }
+    return names;
+  }
+
+  // ---- データ読込 ----
+  fetch('data/ip_candidates.json')
+    .then(res => res.json())
+    .then(data => {
+      candidates = data;
+      renderFilters();
+      renderCardGrid();
+      renderRanking();
+      renderKeieiPickList();
+    })
+    .catch(err => {
+      document.getElementById('cardGrid').innerHTML =
+        '<div class="analysis-empty">候補データの読み込みに失敗しました: ' + err + '</div>';
+    });
+
+  function categories(){
+    return Array.from(new Set(candidates.map(c => c.category)));
+  }
+
+  function renderFilters(){
+    const cats = categories();
+    const html = ['<button class="filter-chip active" data-cat="all">すべて</button>']
+      .concat(cats.map(cat => '<button class="filter-chip" data-cat="'+esc(cat)+'">'+esc(cat)+'</button>'))
+      .join('');
+    document.getElementById('filters').innerHTML = html;
+    document.getElementById('rankFilters').innerHTML = html.replace(/filters/g,'rankFilters');
+    document.getElementById('filters').querySelectorAll('.filter-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        cardFilter = btn.getAttribute('data-cat');
+        document.getElementById('filters').querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        renderCardGrid();
+      });
+    });
+    document.getElementById('rankFilters').querySelectorAll('.filter-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        rankFilter = btn.getAttribute('data-cat');
+        document.getElementById('rankFilters').querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        renderRanking();
+      });
+    });
+  }
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  function renderCardGrid(){
+    const list = candidates.filter(c => cardFilter === "all" || c.category === cardFilter);
+    document.getElementById('cardGrid').innerHTML = list.map(c => {
+      const score = calcScore(c);
+      return '<div class="card'+(c.id===selectedId?' selected':'')+'" data-id="'+esc(c.id)+'">'
+        + '<span class="cat">'+esc(c.category)+'</span>'
+        + '<h3>'+esc(c.name)+'</h3>'
+        + '<p class="desc">'+esc(c.pachinko_history)+'</p>'
+        + '<div class="mini-score">総合スコア <b>'+score+'</b> / 100</div>'
+        + '</div>';
+    }).join('') || '<div class="analysis-empty">該当する候補がありません。</div>';
+
+    document.getElementById('cardGrid').querySelectorAll('.card').forEach(el => {
+      el.addEventListener('click', () => {
+        selectedId = el.getAttribute('data-id');
+        renderCardGrid();
+        renderAnalysis(byId(selectedId));
+        document.getElementById('analysisPanel').scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  }
+
+  function renderAnalysis(c){
+    if(!c){ return; }
+    const score = calcScore(c);
+    const scenStrong = calcScenario(score, 'strong');
+    const scenNormal = calcScenario(score, 'normal');
+    const scenWeak = calcScenario(score, 'weak');
+    const names = generateMachineNames(c);
+
+    const html = ''
+      + '<div class="score-hero">'
+      +   '<div class="num">'+score+'<span> / 100</span></div>'
+      +   '<div style="font-size:13px;color:var(--sub);">'+esc(c.name)+'（'+esc(c.category)+'）の総合スコアです。</div>'
+      + '</div>'
+      + '<div class="chart-wrap" id="radarWrap"></div>'
+      + '<div class="scenarios">'
+      +   scenarioCardHtml('強気シナリオ', scenStrong)
+      +   scenarioCardHtml('標準シナリオ', scenNormal)
+      +   scenarioCardHtml('弱気シナリオ', scenWeak)
+      + '</div>'
+      + '<div class="info-row"><b>自動生成 機種名候補</b>'
+      +   '<div class="machine-names">'+names.map(n=>'<span class="machine-name">'+esc(n)+'</span>').join('')+'</div>'
+      + '</div>'
+      + '<div class="info-row"><b>推す理由</b>'+esc(c.why)+'</div>'
+      + '<div class="info-row"><b>リスク</b>'+esc(c.risk)+'</div>'
+      + '<div class="info-row"><b>出典</b>'
+      +   '<div class="sources">'+(c.sources||[]).map(u=>'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(u)+'</a>').join('')+'</div>'
+      + '</div>';
+
+    document.getElementById('analysisBody').innerHTML = html;
+    drawRadar(c);
+  }
+
+  function scenarioCardHtml(title, s){
+    return '<div class="scenario-card">'
+      + '<h4>'+title+'</h4>'
+      + '<div class="row2"><span>導入台数(推定)</span><b>'+s.units.toLocaleString()+'台</b></div>'
+      + '<div class="row2"><span>導入店舗率</span><b>'+s.storeRate+'%</b></div>'
+      + '<div class="row2"><span>稼働寿命</span><b>'+s.lifeWeeks+'週</b></div>'
+      + '<div class="row2"><span>メーカー売上</span><b>'+yen(s.sales)+'</b></div>'
+      + '</div>';
+  }
+
+  // ライセンス費補正(低/中/高)を0-100スケールに正規化: 低=100 / 中=50 / 高=0
+  const LICENSE_AXIS_SCORE = { "低": 100, "中": 50, "高": 0 };
+
+  function drawRadar(c){
+    const wrap = document.getElementById('radarWrap');
+    if(!wrap) return;
+
+    const labels = ['認知度','世界観相性','若年層親和性','鮮度','ライセンス費補正'];
+    const values = [
+      c.awareness,
+      c.core_fit,
+      c.youth_fit,
+      c.freshness,
+      LICENSE_AXIS_SCORE[c.license_cost] !== undefined ? LICENSE_AXIS_SCORE[c.license_cost] : 50
+    ];
+
+    const size = 300;
+    const cx = size / 2, cy = size / 2;
+    const maxR = 105; // グリッド最外周の半径
+    const axisCount = labels.length;
+    const angleStep = (Math.PI * 2) / axisCount;
+    // 12時方向を起点に時計回り
+    const angleFor = i => (Math.PI * -0.5) + i * angleStep;
+
+    const pointAt = (i, r) => {
+      const a = angleFor(i);
+      return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+    };
+
+    // グリッド3段（33%, 66%, 100%）
+    const gridLevels = [0.33, 0.66, 1];
+    const gridPolys = gridLevels.map(level => {
+      const pts = labels.map((_, i) => pointAt(i, maxR * level).join(',')).join(' ');
+      return '<polygon points="'+pts+'" fill="none" stroke="#2a2a33" stroke-width="1"/>';
+    }).join('');
+
+    // 軸線
+    const axisLines = labels.map((_, i) => {
+      const [x, y] = pointAt(i, maxR);
+      return '<line x1="'+cx+'" y1="'+cy+'" x2="'+x+'" y2="'+y+'" stroke="#2a2a33" stroke-width="1"/>';
+    }).join('');
+
+    // データポリゴン
+    const dataPts = values.map((v, i) => {
+      const r = Math.max(0, Math.min(100, v)) / 100 * maxR;
+      return pointAt(i, r);
+    });
+    const dataPolyPoints = dataPts.map(p => p.join(',')).join(' ');
+    const dataDots = dataPts.map(([x, y]) => '<circle cx="'+x+'" cy="'+y+'" r="3" fill="#ffd60a"/>').join('');
+
+    // 軸ラベル（半径の外側に配置、はみ出し防止で軽くクランプ）
+    const labelPts = labels.map((label, i) => {
+      const [x, y] = pointAt(i, maxR + 22);
+      const anchor = Math.abs(Math.cos(angleFor(i))) < 0.15 ? 'middle' : (Math.cos(angleFor(i)) > 0 ? 'start' : 'end');
+      const clampedX = Math.max(14, Math.min(size - 14, x));
+      return '<text x="'+clampedX+'" y="'+y+'" fill="#c9c9d4" font-size="10" text-anchor="'+anchor+'" dominant-baseline="middle">'+esc(label)+'</text>';
+    }).join('');
+
+    const svg = ''
+      + '<svg viewBox="0 0 '+size+' '+size+'" width="280" height="280" role="img" aria-label="'+esc(c.name)+'のレーダーチャート">'
+      +   gridPolys
+      +   axisLines
+      +   '<polygon points="'+dataPolyPoints+'" fill="rgba(255,45,85,0.25)" stroke="#ff2d55" stroke-width="2"/>'
+      +   dataDots
+      +   labelPts
+      + '</svg>';
+
+    wrap.innerHTML = svg;
+  }
+
+  // ---- ランキング ----
+  function renderRanking(){
+    const list = candidates
+      .filter(c => rankFilter === "all" || c.category === rankFilter)
+      .map(c => ({ c, score: calcScore(c) }))
+      .sort((a,b) => b.score - a.score);
+    document.getElementById('rankBody').innerHTML = list.map((item, i) => {
+      return '<tr class="'+(i===0?'rank-1':'')+'">'
+        + '<td>'+(i+1)+'</td>'
+        + '<td>'+esc(item.c.name)+'</td>'
+        + '<td>'+esc(item.c.category)+'</td>'
+        + '<td>'+item.score+'</td>'
+        + '</tr>';
+    }).join('') || '<tr><td colspan="4">候補がありません。</td></tr>';
+  }
+
+  // ---- メーカー経営モード ----
+  function renderKeieiSlots(){
+    document.getElementById('keieiSlots').innerHTML = keieiSlots.map((id, i) => {
+      const c = id ? byId(id) : null;
+      return '<div class="slot'+(c?' filled':'')+'" data-slot="'+i+'">'
+        + (c ? esc(c.name) : ('枠 '+(i+1)+'\n(未編成)'))
+        + '</div>';
+    }).join('');
+    document.getElementById('keieiSlots').querySelectorAll('.slot').forEach(el => {
+      el.addEventListener('click', () => {
+        const i = parseInt(el.getAttribute('data-slot'), 10);
+        if(keieiSlots[i]){ keieiSlots[i] = null; renderKeieiAll(); }
+      });
+    });
+  }
+
+  function renderKeieiPickList(){
+    document.getElementById('keieiPickList').innerHTML = candidates.map(c => {
+      const picked = keieiSlots.includes(c.id);
+      const full = keieiSlots.every(s => s !== null) && !picked;
+      return '<span class="keiei-pick'+(picked?' picked':'')+(full?' disabled':'')+'" data-id="'+esc(c.id)+'">'
+        + esc(c.name)+'（'+esc(c.category)+'）</span>';
+    }).join('');
+    document.getElementById('keieiPickList').querySelectorAll('.keiei-pick').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.getAttribute('data-id');
+        const idx = keieiSlots.indexOf(id);
+        if(idx >= 0){
+          keieiSlots[idx] = null;
+        } else {
+          const emptyIdx = keieiSlots.indexOf(null);
+          if(emptyIdx >= 0){ keieiSlots[emptyIdx] = id; }
+        }
+        renderKeieiAll();
+      });
+    });
+  }
+
+  function renderKeieiSummary(){
+    const picked = keieiSlots.filter(id => id !== null).map(byId);
+    const count = picked.length;
+    document.getElementById('keieiCount').textContent = count + ' / ' + KEIEI_SLOT_COUNT;
+
+    if(count === 0){
+      document.getElementById('keieiSales').textContent = '-';
+      document.getElementById('keieiLicense').textContent = '-';
+      document.getElementById('keieiAvgScore').textContent = '-';
+      document.getElementById('keieiWarn').innerHTML = '';
+      return;
+    }
+
+    let totalSales = 0, totalLicense = 0, totalScore = 0;
+    const catCount = {};
+    picked.forEach(c => {
+      const score = calcScore(c);
+      totalSales += calcScenario(score, 'normal').sales;
+      totalLicense += LICENSE_COST_YEN[c.license_cost] || 0;
+      totalScore += score;
+      catCount[c.category] = (catCount[c.category]||0) + 1;
+    });
+
+    document.getElementById('keieiSales').textContent = yen(totalSales);
+    document.getElementById('keieiLicense').textContent = yen(totalLicense);
+    document.getElementById('keieiAvgScore').textContent = Math.round(totalScore/count) + ' 点';
+
+    const maxCat = Object.entries(catCount).sort((a,b)=>b[1]-a[1])[0];
+    let warnHtml = '';
+    if(maxCat && maxCat[1] >= 3){
+      warnHtml = '<div class="warn">ポートフォリオが「'+esc(maxCat[0])+'」カテゴリに偏っています（'+maxCat[1]+'/'+count+'枠）。客層の分散を検討してください。</div>';
+    } else if(count === KEIEI_SLOT_COUNT){
+      warnHtml = '<div class="ok-msg">4枠が編成されました。カテゴリのバランスも良好です。</div>';
+    }
+    document.getElementById('keieiWarn').innerHTML = warnHtml;
+  }
+
+  function renderKeieiAll(){
+    renderKeieiSlots();
+    renderKeieiPickList();
+    renderKeieiSummary();
+  }
+
+  // ---- タブ切替 ----
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.getAttribute('data-tab')).classList.add('active');
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
