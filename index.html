@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>涼丸産業 - AIパチンコメーカー</title>
+<title>両丸水産 - AIパチンコメーカー</title>
+<meta name="description" content="架空メーカーによる企画シミュレーションツールです。">
+<!-- 公開先の変更は、このOGPブロックの og:image のURLを1か所差し替える。 -->
+<meta property="og:title" content="両丸水産 - AIパチンコメーカー">
+<meta property="og:description" content="架空メーカーによる企画シミュレーションツールです。">
+<meta property="og:image" content="https://ryoseiimai.github.io/ai-pachinko-maker/machines/genen-houou/images/keyvisual.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   :root{
     --bg:#0c0c10; --panel:#17171d; --line:#2a2a33; --text:#f2f2f2;
@@ -14,7 +20,7 @@
     font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;}
   h1{font-size:18px;margin:10px 12px 2px;letter-spacing:1px;}
   .sub{font-size:11.5px;color:var(--sub);margin:0 12px 12px;line-height:1.5;}
-  .wrap{max-width:960px;margin:0 auto;padding-bottom:32px;overflow-x:hidden;}
+  .wrap{max-width:960px;margin:0 auto;padding-bottom:32px;min-width:0;}
   .tabs{display:flex;gap:6px;padding:0 12px;margin-bottom:12px;flex-wrap:wrap;}
   .tab-btn{
     font-size:13px;padding:9px 12px;border-radius:8px;border:1px solid var(--line);
@@ -105,12 +111,34 @@
   details.calc-details summary{cursor:pointer;font-size:13px;color:var(--sub);padding:2px 0;}
   details.calc-details[open] summary{margin-bottom:8px;}
   details.sources-details summary{cursor:pointer;font-size:11px;color:var(--sub);margin-bottom:2px;}
+
+  /* 機種紹介への導線。既存のコラボIP分析と同じ暗色・角丸のパネル。 */
+  .machine-nav{display:flex;justify-content:flex-end;padding:0 12px;margin-bottom:12px;}
+  .machine-nav a{display:inline-flex;align-items:center;min-height:48px;padding:8px 16px;border:1px solid var(--accent2);border-radius:8px;color:var(--accent2);font-size:14px;font-weight:700;text-decoration:none;}
+  .latest-machine{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center;margin:0 12px 18px;padding:16px;background:#1f1928;border:1px solid #665071;border-radius:10px;color:var(--text);text-decoration:none;min-width:0;}
+  .latest-machine>div{min-width:0;}
+  .latest-machine img{display:block;width:100%;height:auto;border-radius:6px;}
+  .latest-machine .latest-label{margin:0 0 6px;font-size:14px;color:var(--accent2);}
+  .latest-machine h2{margin:0 0 8px;font-size:21px;line-height:1.6;}
+  .latest-machine p{margin:0;font-size:14px;line-height:1.8;color:#e0d8e8;}
+  .latest-machine .latest-link{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:700;color:var(--accent2);}
+  .machine-nav a,.latest-machine h2,.latest-machine p,.latest-link{word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance;}
+  .machine-nav a:focus-visible,.latest-machine:focus-visible{outline:3px solid var(--accent2);outline-offset:3px;}
+  .latest-machine:hover{border-color:var(--accent2);}
+  @media(max-width:639px){.latest-machine{grid-template-columns:minmax(0,1fr);gap:14px;}}
+.phrase{display:inline-block;max-width:100%;vertical-align:baseline;}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>涼丸産業(AIパチンコメーカー)</h1>
+  <h1>両丸水産(AIパチンコメーカー)</h1>
   <p class="sub">どのIPとコラボして台を出すか、AIが分析します。<br>架空メーカーによる企画シミュレーションツールです。</p>
+
+  <nav class="machine-nav" aria-label="機種情報"><a href="machines/index.html">機種情報 →</a></nav>
+  <a class="latest-machine" href="machines/genen-houou/index.html" aria-labelledby="latest-machine-title">
+    <img src="machines/genen-houou/images/keyvisual.jpg" alt="CR幻焔鳳凰 極焔MAX399のキービジュアル" width="1600" height="1067" loading="lazy" decoding="async" class="">
+    <div><p class="latest-label">最新機種 / 架空機種</p><h2 id="latest-machine-title">CR幻焔鳳凰 <wbr>極焔MAX399</h2><p>焔は、<wbr>消えない。<wbr><span class="phrase">——確変80%ループ</span><wbr><span class="phrase">×16R約2,160個</span></p><span class="latest-link">機種情報を見る →</span></div>
+  </a>
 
   <div class="tabs">
     <button class="tab-btn active" data-tab="candidates">コラボ候補</button>
@@ -185,7 +213,7 @@
 
   <div class="footer">
     架空メーカーのシミュレーションです。数値は公開統計と仮定に基づく推定で、実在メーカー・機種・出玉性能とは無関係です。<br>
-    設定・出玉・還元率に関する数値は一切扱いません。
+    このコラボIP分析では、設定・出玉・還元率に関する数値は一切扱いません。
   </div>
 </div>
 
@@ -202,12 +230,12 @@
   const LICENSE_COST_YEN = { "低": 30000000, "中": 80000000, "高": 200000000 }; // 経営モード試算用の仮定ライセンス費
   const KEIEI_SLOT_COUNT = 4;
   const MACHINE_NAME_PATTERNS = [
-    n => "P涼丸 " + n + "〜AI覚醒〜",
-    n => "P涼丸 " + n + " 甘デジAI",
-    n => "e涼丸 " + n + " -覚醒の刻-",
-    n => "P" + n + " 涼丸ver.",
-    n => "スーパー涼丸 " + n + " IN AIホール",
-    n => "CR涼丸 " + n + " 2"
+    n => "P両丸 " + n + "〜AI覚醒〜",
+    n => "P両丸 " + n + " 甘デジAI",
+    n => "e両丸 " + n + " -覚醒の刻-",
+    n => "P" + n + " 両丸ver.",
+    n => "スーパー両丸 " + n + " IN AIホール",
+    n => "CR両丸 " + n + " 2"
   ];
 
   let candidates = [];
@@ -360,11 +388,11 @@
     const shareBtn = document.getElementById('btnShare');
     if(shareBtn){
       shareBtn.addEventListener('click', () => {
-        const text = '【涼丸産業 AIパチンコメーカー】\n'
+        const text = '【両丸水産 AIパチンコメーカー】\n'
           + esc_(c.name) + 'がパチンコになったら…総合' + score + '点\n'
           + '機種名『' + esc_(heroName) + '』\n'
-          + '#涼丸産業 #AIパチンコメーカー\n'
-          + 'https://ryoseiimai.github.io/ai-pachinko-maker/';
+          + '#両丸水産 #AIパチンコメーカー\n'
+          + new URL('../../../', document.querySelector('meta[property="og:image"]').content).href;
         const url = 'https://x.com/intent/post?text=' + encodeURIComponent(text);
         console.log('share intent url:', url);
         window.open(url, '_blank', 'noopener');

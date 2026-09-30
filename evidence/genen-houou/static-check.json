@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "checks": 252,
+  "spec_rows": 8,
+  "bonus_rows": 6,
+  "effect_cards": 11,
+  "flow_items": 4,
+  "listing_cards": 1,
+  "images": [
+    {
+      "name": "board.jpg",
+      "width": 1600,
+      "height": 1600,
+      "bytes": 584561
+    },
+    {
+      "name": "cabinet.jpg",
+      "width": 1067,
+      "height": 1600,
+      "bytes": 518191
+    },
+    {
+      "name": "keyvisual.jpg",
+      "width": 1600,
+      "height": 1067,
+      "bytes": 411424
+    },
+    {
+      "name": "lcd_cutin.jpg",
+      "width": 1600,
+      "height": 1067,
+      "bytes": 321211
+    },
+    {
+      "name": "lcd_normal.jpg",
+      "width": 1600,
+      "height": 1067,
+      "bytes": 585561
+    },
+    {
+      "name": "lcd_reach.jpg",
+      "width": 1600,
+      "height": 1067,
+      "bytes": 510551
+    },
+    {
+      "name": "lcd_round.jpg",
+      "width": 1600,
+      "height": 1067,
+      "bytes": 530426
+    },
+    {
+      "name": "lcd_rush.jpg",
+      "width": 1600,
+      "height": 1067,
+      "bytes": 563837
+    }
+  ],
+  "image_bytes_total": 4025762,
+  "browser_verification": "Recorded separately; file:// browser navigation unavailable under browser URL policy. Relative targets validated statically."
+}
