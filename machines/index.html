@@ -2,13 +2,14 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%235b2a86%27/%3E%3Ccircle cx=%2712%27 cy=%2716%27 r=%277%27 fill=%27none%27 stroke=%27%23c9a227%27 stroke-width=%272%27/%3E%3Ccircle cx=%2720%27 cy=%2716%27 r=%277%27 fill=%27none%27 stroke=%27%23c9a227%27 stroke-width=%272%27/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>機種一覧｜両丸水産 機種情報</title>
 <meta name="description" content="すべて架空。両丸水産は実在しないメーカー、本機も実在しない。数値は設計上の作り物で、実在機種の値ではない。">
 <!-- 公開先の変更は、このOGPブロックの og:image のURLを1か所差し替える。 -->
 <meta property="og:title" content="機種一覧｜両丸水産 機種情報">
 <meta property="og:description" content="すべて架空。両丸水産は実在しないメーカー、本機も実在しない。数値は設計上の作り物で、実在機種の値ではない。">
-<meta property="og:image" content="https://ryoseiimai.github.io/ai-pachinko-maker/machines/genen-houou/images/keyvisual.jpg">
+<meta property="og:image" content="https://ryoseiimai.github.io/ai-pachinko-maker/machines/kouseiden-nanatsu-no-kouju/images/keyvisual.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
 :root{--purple:#5b2a86;--gold:#c9a227;--ink:#222;--muted:#555;--line:#b9b9bf;--ground:#eeeef0;--lavender:#f0eaf5}
@@ -16,7 +17,10 @@
 html{scroll-behavior:smooth;scroll-padding-top:20px}
 body{margin:0;background:var(--ground);color:var(--ink);font:16px/1.8 -apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;word-break:keep-all;overflow-wrap:anywhere}
 h1,h2,h3,p,figure{margin:0}
-h1,h2,h3,a,th,td,figcaption{text-wrap:balance;word-break:keep-all;overflow-wrap:anywhere}
+h1.balanced,h2.balanced{text-wrap:balance}
+h1,h2,h3,a,th,td,figcaption{word-break:keep-all;overflow-wrap:anywhere}
+.nowrap{display:inline-block;white-space:nowrap;word-break:normal;overflow-wrap:normal}
+body{line-break:strict}
 a{color:var(--purple);text-underline-offset:4px}
 a:focus-visible{outline:3px solid var(--purple);outline-offset:4px}
 a:hover{text-decoration:underline}
@@ -37,14 +41,14 @@ main,section,article,aside,nav,header,footer,div{min-width:0}
 .breadcrumbs a{display:inline-flex;align-items:center;min-height:48px}
 .breadcrumbs [aria-current]{color:#333}
 .page-heading{font-size:25px;line-height:1.5;border-left:5px solid var(--purple);padding:4px 0 4px 15px;margin:4px 0 24px}
-.panel{background:#fff;border:1px solid #d9d9df;border-top:4px solid var(--purple);padding:26px;margin-bottom:24px}
+.panel{box-sizing:border-box;max-width:100%;background:#fff;border:1px solid #d9d9df;border-top:4px solid var(--purple);padding:26px;margin-bottom:24px}
 .section-heading{display:flex;align-items:center;gap:12px;font-size:22px;line-height:1.5;margin-bottom:24px;padding-bottom:13px;border-bottom:1px solid var(--line)}
 .section-heading::before{content:"";width:12px;height:12px;border:3px solid var(--purple);border-radius:50%;flex:none}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-block:16px 24px;padding:0;list-style:none}
 .tags li{border:1px solid #c9bad5;background:var(--lavender);padding:4px 12px;color:#48206b;font-size:14px;font-weight:700;line-height:1.6}
 .tags li:last-child{background:#fff9e5;color:#5a4505;border-color:#d8bc62}
 table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:16px;line-height:1.75}
-th,td{border:1px solid #aaaab0;padding:12px 14px;vertical-align:middle}
+th,td{overflow-wrap:anywhere;border:1px solid #aaaab0;padding:12px 14px;vertical-align:middle}
 th{font-weight:500}
 .spec-table th{width:29%;background:#d5d5d8;text-align:left}
 .spec-table td{background:#fff;font-weight:600}
@@ -103,17 +107,24 @@ th{font-weight:500}
 </header>
 <main class="container">
   <nav aria-label="パンくず"><ol class="breadcrumbs"><li><a href="../index.html">両丸水産</a></li><li><a href="index.html" aria-current="page">機種情報</a></li></ol></nav>
-  <h1 class="page-heading">機種一覧</h1>
+  <h1 class="balanced page-heading">機種一覧</h1>
   <section id="pachinko" aria-labelledby="pachinko-heading">
-    <h2 class="section-heading" id="pachinko-heading">パチンコ</h2>
-    <div class="machine-grid">
-      <!-- 機種追加時は article.machine-card を1件ずつ追加。リンク・画像・原稿を差し替える。 -->
-      <article class="machine-card">
+    <h2 class="balanced section-heading" id="pachinko-heading">パチンコ</h2>
+    <div class="machine-grid"><article class="machine-card">
+        <a href="kouseiden-nanatsu-no-kouju/index.html" aria-labelledby="kouseiden-nanatsu-no-kouju-title">
+          <figure class="card-cabinet"><img src="kouseiden-nanatsu-no-kouju/images/cabinet.jpg" alt="e 煌星伝 〜七つの光珠〜 LTの筐体" width="1067" height="1600" loading="lazy" decoding="async" class=""></figure>
+          <h3 id="kouseiden-nanatsu-no-kouju-title">e 煌星伝 〜七つの光珠〜 LT</h3>
+          <ul class="tags"><li>STタイプ</li><li>ラッキートリガー搭載</li><li>スマパチ</li><li>架空機種</li></ul>
+          <dl class="card-specs"><div><dt>大当り確率</dt><dd><span class="nowrap" style="white-space:nowrap">1/349.9</span><span class="nowrap" style="white-space:nowrap">（低確率時）</span>／<span class="nowrap" style="white-space:nowrap">1/79.9</span><span class="nowrap" style="white-space:nowrap">（高確率時）</span></dd></div><div><dt>タイプ</dt><dd>スマパチ／ラッキートリガー搭載・STタイプ</dd></div></dl>
+          <span class="card-cta">機種情報を見る<span aria-hidden="true">→</span></span>
+        </a>
+      </article>
+<article class="machine-card">
         <a href="genen-houou/index.html" aria-labelledby="genen-houou-title">
           <figure class="card-cabinet"><img src="genen-houou/images/cabinet.jpg" alt="CR幻焔鳳凰 極焔MAX399の筐体" width="1067" height="1600" loading="lazy" decoding="async" class=""></figure>
-          <h3 id="genen-houou-title">CR幻焔鳳凰 <wbr>極焔MAX399</h3>
+          <h3 id="genen-houou-title">CR幻焔鳳凰 極焔MAX<span class="nowrap" style="white-space:nowrap">399</span></h3>
           <ul class="tags"><li>MAXタイプ</li><li>確変ループ</li><li>架空機種</li></ul>
-          <dl class="card-specs"><div><dt>大当り確率</dt><dd>1/399.6（低確率時） <wbr>1/39.9（高確率時）</dd></div><div><dt>タイプ</dt><dd>パチンコ／<wbr>確変ループ・<wbr>MAXタイプ</dd></div></dl>
+          <dl class="card-specs"><div><dt>大当り確率</dt><dd><span class="nowrap" style="white-space:nowrap">1/399.6</span><span class="nowrap" style="white-space:nowrap">（低確率時）</span><span class="nowrap" style="white-space:nowrap"> 1/39.9</span><span class="nowrap" style="white-space:nowrap">（高確率時）</span></dd></div><div><dt>タイプ</dt><dd>パチンコ／確変ループ・MAXタイプ</dd></div></dl>
           <span class="card-cta">機種情報を見る<span aria-hidden="true">→</span></span>
         </a>
       </article>
@@ -122,7 +133,7 @@ th{font-weight:500}
 </main>
 <footer class="site-footer">
   <div class="container">
-    <p class="disclaimer">このページは<wbr>架空メーカー「両丸水産」による<wbr>架空機種の<wbr>パロディ企画です。<wbr>実在の<wbr>メーカー・機種・<wbr>ホール・団体とは<wbr>関係ありません。<wbr>本機は実在せず、<wbr>遊技はできません。<wbr>画像はすべて<wbr>AIで生成したものです。<wbr>数値は<wbr>企画上の設定です。</p>
+    <p class="disclaimer">このページは架空メーカー「両丸水産」による架空機種のパロディ企画です。実在のメーカー・機種・ホール・団体とは関係ありません。本機は実在せず、遊技はできません。画像はすべてAIで生成したものです。数値は企画上の設定です。</p>
     <nav class="footer-links" aria-label="フッターナビゲーション"><a href="../index.html">両丸水産 トップ</a><a href="index.html">機種一覧</a><a href="#top">ページ上部へ ↑</a></nav>
   </div>
 </footer>
